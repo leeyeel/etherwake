@@ -78,14 +78,8 @@ static char usage_msg[] =
 #include <linux/if.h>
 
 #include <features.h>
-#if __GLIBC__ >= 2 && __GLIBC_MINOR >= 1
 #include <netpacket/packet.h>
 #include <net/ethernet.h>
-#else
-#include <asm/types.h>
-#include <linux/if_packet.h>
-#include <linux/if_ether.h>
-#endif
 #include <netdb.h>
 #include <netinet/ether.h>
 
@@ -131,7 +125,7 @@ int main(int argc, char *argv[])
 		case 'D': debug++;			break;
 		case 'i': ifname = optarg;	break;
 		case 'p': get_wol_pw(optarg); break;
-		case 'u': printf(usage_msg); return 0;
+		case 'u': printf("%s\n", usage_msg); return 0;
 		case 'v': verbose++;		break;
 		case 'V': do_version++;		break;
 		case '?':
@@ -140,7 +134,7 @@ int main(int argc, char *argv[])
 	if (verbose || do_version)
 		printf("%s\n", version_msg);
 	if (errflag) {
-		fprintf(stderr, brief_usage_msg);
+		fprintf(stderr, "%s\n", brief_usage_msg);
 		return 3;
 	}
 
